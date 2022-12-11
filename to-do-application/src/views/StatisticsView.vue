@@ -1,17 +1,31 @@
 <template>
-    <div class="wrapper">
+  <div class="wrapper">
     <div class="statistics__box">
       <h1>Текущая статистика задач</h1>
-      <div class="text complete">&#10004; Выполнено:</div>
+      <div class="text complete">&#10004; Выполнено: {{statistics.completedTasks||0}}</div>
       <div class="text overdue">&#8987; Просрочено:</div>
-      <div class="text delete">&#10006; Удалено:</div>
-      <button class="reset">Сбросить статистику</button>
+      <div class="text delete">&#10006; Удалено: {{statistics.deletedTasks||0}}</div>
+      <button class="reset" @click="reset()">Сбросить статистику</button>
     </div>
-    </div> 
+  </div> 
 </template>
 
 <script setup>
+import {ref, onMounted} from 'vue';
+import {useStatisticsStore} from "../stores/useStatisticsStore.js";
 
+const statistics = useStatisticsStore();
+onMounted( () => {
+   statistics.deletedTasks = localStorage.getItem('deletedTasks');
+   statistics.completedTasks = localStorage.getItem('completedTasks')
+});
+
+function reset(){
+    statistics.deletedTasks = 0;
+    statistics.completedTasks = 0;
+    localStorage.setItem('deletedTasks', statistics.deletedTasks);
+    localStorage.setItem('completedTasks', statistics.completedTasks);
+};
 </script>
 
 <style scoped>
@@ -62,5 +76,6 @@ h1{
     border: none;
     background: #084145;
     cursor: pointer;
+    padding: 5px;
 }
 </style>

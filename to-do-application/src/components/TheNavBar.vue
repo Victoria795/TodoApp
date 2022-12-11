@@ -2,14 +2,13 @@
     <div>
 <nav class="nav">
     <RouterLink to="/" class="nav_link" active-class="active">Задачи</RouterLink>
-    <RouterLink to="/edit" class="nav_link" active-class="active" >Редактировать</RouterLink>
     <RouterLink to="/statistics" class="nav_link" active-class="active">Статистика</RouterLink>
 </nav>
     </div> 
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+
 </script>
 
 <style scoped>

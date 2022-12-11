@@ -1,13 +1,6 @@
 <template>
-    <div>
-     EDIT
+    <div class="wrapper">
+      я редактировать
     </div> 
-</template>
-
-<script setup>
-
-</script>
-
-<style scoped>
-
-</style>
+  </template>
+  

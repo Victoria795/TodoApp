@@ -1,16 +1,15 @@
 <template>
   <div class="wrapper">
-  <header class="header">
-    <NavBar/>
-  </header>
-  <RouterView/>
+    <header class="header">
+      <TheNavBar/>
+    </header>
+    <RouterView/>
   </div>
 </template>
 
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import MainView from "./views/MainView.vue";
-import NavBar from "./components/NavBar.vue";
+import TheNavBar from "./components/TheNavBar.vue";
 </script>
 
 <style scoped>
