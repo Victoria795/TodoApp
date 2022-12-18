@@ -16,10 +16,7 @@ const props = defineProps({
     isVisible: Boolean,
     title: String,
     description: String,
-    deadline: Date,
-    completed: {type: Boolean,
-                default: false
-               } 
+    deadline: String,
 });
 const emit = defineEmits(['closeModal']);
 function closeModal () {

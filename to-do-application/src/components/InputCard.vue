@@ -3,23 +3,37 @@
     <h2>Новая задача</h2>
     <input type="text" placeholder="Введите название задачи" class="task__input" v-model="title">
     <input type="text" placeholder="Введите описание задачи" class="task__input" v-model="description">
-    <input type="date" class="task__time" v-model="data">
+    <input type="date" class="task__time" v-model="deadline">
     <button class="btn__add" @click="addTask">Добавить</button>
+    <div class="error-warning" v-show="error">Заполните все поля!</div>
     </div> 
 </template>
 
 <script setup>
+  import {useTasksStore} from "../stores/useTasksStore.js";
   import {ref} from "vue";
+
+  const store = useTasksStore();
     
-  const emit = defineEmits(['addTask']);
   const title = ref('');
   const description = ref('');
-  const data = ref(Date);
-  const completed = ref(false);
-  
+  const deadline = ref('');
+  const done = ref(false);
+  const error = ref(false);
+
   function addTask() {
-    emit('addTask', {title, description, data, completed})
-  };
+    if(title.value===''||description.value===''||deadline.value===''){
+    error.value = true;
+    return
+    };
+    store.addTask(title.value, description.value, deadline.value, done.value);
+    error.value = false;
+    title.value = "";
+    description.value = "";
+    deadline.value = "";
+    store.setTasksToStorage();
+    };
+    
 </script>
 
 <style scoped>
@@ -35,7 +49,7 @@ h2{
   color: #f50655;
 }
 .task__input{
-  height: 40px;
+  min-height: 40px;
   width: 300px;
   border: none;
   outline-color:rgb(124, 185, 185);
@@ -54,6 +68,11 @@ h2{
   width: 90px;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
+}
+.error-warning{
+  color: red;
+  font-size: 18px;
   font-weight: bold;
 }
 </style>

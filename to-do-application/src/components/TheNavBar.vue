@@ -1,10 +1,10 @@
 <template>
-    <div>
-<nav class="nav">
+  <header class="header">
+    <nav class="nav">
     <RouterLink to="/" class="nav_link" active-class="active">Задачи</RouterLink>
     <RouterLink to="/statistics" class="nav_link" active-class="active">Статистика</RouterLink>
-</nav>
-    </div> 
+    </nav>
+  </header>
 </template>
 
 <script setup>
@@ -12,6 +12,14 @@
 </script>
 
 <style scoped>
+.header{
+  width: 100%;
+  height: 80px;
+  background: #084145;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 .nav{
   display: flex;
   justify-content: center;
