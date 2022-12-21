@@ -5,7 +5,7 @@
       <TaskCard
       :title="task.title" 
       :description="task.description"
-      :deadline="task.deadline"
+      :deadline="new Date(task.deadline).toLocaleDateString()"
       :done="task.done"
       v-for="(task, index) in tasks"
       :key="index"
@@ -15,17 +15,17 @@
       @open-view-modal="toggleViewModal(), chosenTask=task"
       />
       <ViewModal 
-      :isVisible="viewModalVisible"
+      v-if="viewModalVisible"
       @close-modal="toggleViewModal"
       :title="chosenTask.title" 
       :description="chosenTask.description"
-      :deadline="chosenTask.deadline"
+      :deadline="new Date(chosenTask.deadline).toLocaleDateString()"
       >
       </ViewModal>
 
       <EditModal
-      :isVisible="editModalVisible"
-      @save-changes="saveChanges"
+      v-if="editModalVisible"
+      @save-changes="saveChanges($event, chosenTask.id)"
       :title="chosenTask.title"
       :description="chosenTask.description"
       :deadline="chosenTask.deadline"
@@ -53,6 +53,11 @@ onMounted( () => {
   store.getTasksFromStorage();
 });
 
+function saveChanges({newTitle, newDescription, newDeadline}, id){
+store.editTask(newTitle, newDescription, newDeadline, id);
+editModalVisible.value = !editModalVisible.value;
+};
+
 const chosenTask = ref({});
 function deleteTask(index) {
   store.deleteTask(index);
@@ -65,11 +70,11 @@ function completeTask (index) {
 
 function addDeletedTask() {
   statistics.addDeletedTask();
-  statistics.setDeletedTaskstoStorage();
+  localStorage.setItem('deletedTasks', statistics.deletedTasks);
 };
 function addCompletedTask() {
   statistics.addCompletedTask();
-  statistics.setCompletedTaskstoStorage();
+  localStorage.setItem('completedTasks', statistics.completedTasks);
 };
 
 const viewModalVisible = ref(false);
@@ -80,9 +85,6 @@ const toggleViewModal = () => {
 const editModalVisible = ref(false);
 const toggleEditModal = () => {
    editModalVisible.value = !editModalVisible.value
-};
-const saveChanges = (newTitle, newDescription, newDeadline) => {
-   editModalVisible.value = !editModalVisible.value;
 };
 </script>
 

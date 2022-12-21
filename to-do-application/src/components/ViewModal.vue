@@ -1,6 +1,5 @@
 <template>
-    <div class="fixed-overlay"
-    v-show="isVisible">
+    <div class="fixed-overlay">
     <div class="modal__wrapper"> 
       <h4 class="view-modal__title">{{title}}</h4>
       <div class="view-modal__description">{{description}}</div>
@@ -13,7 +12,6 @@
 <script setup>
 
 const props = defineProps({
-    isVisible: Boolean,
     title: String,
     description: String,
     deadline: String,

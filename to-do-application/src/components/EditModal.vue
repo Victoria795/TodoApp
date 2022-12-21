@@ -1,6 +1,5 @@
 <template>
-    <div class="fixed-overlay"
-    v-show="isVisible">
+    <div class="fixed-overlay">
     <div class="modal__wrapper"> 
       <input type="text" class="edit-modal__title" v-model="newTitle"/>
       <input type="text" class="edit-modal__description" v-model="newDescription"/>
@@ -11,24 +10,23 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {ref, computed} from "vue";
 import {useTasksStore} from "../stores/useTasksStore.js";
 const store = useTasksStore();
 
 
 const props = defineProps({
-    isVisible: Boolean,
     title: String,
     description: String,
     deadline: String
 });
-const newTitle = ref('');
-const newDescription = ref('');
-const newDeadline = ref('');
+const newTitle = ref(props.title);
+const newDescription = ref(props.description);
+const newDeadline = ref(props.deadline);
 
 const emit = defineEmits(['saveChanges']);
 function saveChanges () {
-  emit('saveChanges')
+  emit('saveChanges', {newTitle, newDescription, newDeadline})
 };
 </script>
 

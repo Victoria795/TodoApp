@@ -2,9 +2,9 @@
   <div class="wrapper">
     <div class="statistics__box">
       <h1>Текущая статистика задач</h1>
-      <div class="text complete">&#10004; Выполнено: {{statistics.completedTasks||0}}</div>
-      <div class="text overdue">&#8987; Просрочено: {{statistics.overdueTasks||0}}</div>
-      <div class="text delete">&#10006; Удалено: {{statistics.deletedTasks||0}}</div>
+      <div class="text complete">&#10004; Выполнено: {{statistics.completedTasks}}</div>
+      <div class="text overdue">&#8987; Просрочено: {{statistics.overdueTasks}}</div>
+      <div class="text delete">&#10006; Удалено: {{statistics.deletedTasks}}</div>
       <button class="reset" @click="reset()">Сбросить статистику</button>
     </div>
   </div> 
@@ -16,18 +16,12 @@ import {useStatisticsStore} from "../stores/useStatisticsStore.js";
 
 const statistics = useStatisticsStore();
 onMounted( () => {
-    statistics.getDeletedTasksFromStorage();
-    statistics.getCompletedTasksFromStorage();
-    statistics.getOverdueTasksFromStorage();
+    statistics.getStatisticsFromStorage();
 });
 
 function reset() {
-    statistics.deletedTasks = 0;
-    statistics.completedTasks = 0;
-    statistics.overdueTasks = 0;
-    statistics.setDeletedTaskstoStorage();
-    statistics.setCompletedTaskstoStorage();
-    statistics.setOverdueTaskstoStorage();
+    statistics.resetStatistics();
+    statistics.setStatisticsToStorage();
 };
 </script>
 
