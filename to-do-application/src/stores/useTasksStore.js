@@ -21,12 +21,6 @@ export const useTasksStore = defineStore('tasks', () => {
 
   function setTasksToStorage() {
         localStorage.setItem('personalTasks', JSON.stringify(tasks.value));
-        let overdueTasks = 0;
-        tasks.value.forEach(task => {
-        const isOverdue = (new Date(task.deadline)).getTime() < Date.now();
-        return overdueTasks += isOverdue;
-        });
-        localStorage.setItem('overdueTasks', overdueTasks)
   };
   function getTasksFromStorage(){
         let personalTasks = JSON.parse(localStorage.getItem('personalTasks')) || [];

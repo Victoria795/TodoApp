@@ -51,6 +51,12 @@ const {tasks} = storeToRefs(store);
 
 onMounted( () => {
   store.getTasksFromStorage();
+  let overdueTasks = 0;
+        tasks.value.forEach(task => {
+        const isOverdue = (new Date(task.deadline)).getTime() < Date.now();
+        return overdueTasks += isOverdue;
+        });
+        localStorage.setItem('overdueTasks', overdueTasks);
 });
 
 function saveChanges({newTitle, newDescription, newDeadline}, id){
